@@ -1,5 +1,5 @@
 # trocalivros
-
+Ainda não finalizado
 App para trocar livros.
 
 ## Getting Started
