@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "770152763239",
+    "project_id": "devolveolivro",
+    "storage_bucket": "devolveolivro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770152763239:android:a60af9c2e2a3eda01ca9c2",
+        "android_client_info": {
+          "package_name": "com.example.trocalivros"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "770152763239-sar1ergnd392jkaudejfhkghj9uhosm2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpfvLFTxGL454sogcdWLyWBuPOW6Q_vPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770152763239-sar1ergnd392jkaudejfhkghj9uhosm2.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "770152763239-dqg39ldngkqcttcvt4ermk5ogug925rf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.devolveolivro"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
