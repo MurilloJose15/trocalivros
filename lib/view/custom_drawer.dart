@@ -19,11 +19,15 @@ class CustomDrawer extends StatelessWidget {
             accountEmail: Text(_userController.user?.email ?? ''),
             currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
-                child: Text(
-                  _userController.user?.email?.isNotEmpty == true
-                      ? _userController.user!.email![0]
-                      : 'A',
-                  style: TextStyle(fontSize: 40.0),
+                child: Column(
+                  children: [
+                    Text(
+                      _userController.user?.email?.isNotEmpty == true
+                          ? _userController.user!.email![0]
+                          : 'A',
+                      style: TextStyle(fontSize: 40.0),
+                    ),
+                  ],
                 )),
           ),
           ListTile(
