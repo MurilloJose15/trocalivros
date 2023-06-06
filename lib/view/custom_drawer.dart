@@ -1,12 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:trocalivros/view/userController.dart';
+
+import 'userController.dart';
 
 
-class CustomDrawer extends StatelessWidget {
+
+class CustomDrawer extends StatefulWidget {
   CustomDrawer({Key? key}) : super(key: key);
 
+  @override
+  State<CustomDrawer> createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
   final UserController _userController = Get.put(UserController());
+
+  Future<void> deslogarFirebase() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('/home', (Route<dynamic> route) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +34,12 @@ class CustomDrawer extends StatelessWidget {
             currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       _userController.user?.email?.isNotEmpty == true
                           ? _userController.user!.email![0]
-                          : 'A',
+                          : 'M',
                       style: TextStyle(fontSize: 40.0),
                     ),
                   ],
@@ -73,6 +88,11 @@ class CustomDrawer extends StatelessWidget {
               // Em seguida, feche o drawer
               Navigator.pop(context);
             },
+          ),
+          ListTile(
+            leading: Icon(Icons.logout),
+            title: Text('Sair'),
+            onTap: deslogarFirebase,
           ),
         ],
       ),

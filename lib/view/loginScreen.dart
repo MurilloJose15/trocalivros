@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:validatorless/validatorless.dart';
 
 
 
@@ -63,12 +64,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: TextFormField(
                 controller: _emailController,
-                validator: MultiValidator(
-                  [
-                    RequiredValidator(errorText: 'E-mail é obrigatório'),
-                    EmailValidator(errorText: 'Insira um e-mail válido'),
-                  ],
-                ),
+                validator: Validatorless.multiple([
+                  Validatorless.required('Email is required'),
+                  Validatorless.email('Invalid email'),
+                ]),
                 decoration: InputDecoration(
                   hintText: 'E-mail',
                   border:
@@ -87,13 +86,10 @@ class _LoginScreenState extends State<LoginScreen> {
               child: TextFormField(
                 controller: _passwordController,
                 obscureText: _isObscure,
-                validator: MultiValidator(
-                  [
-                    RequiredValidator(errorText: 'Senha é obrigatória'),
-                    MinLengthValidator(6,
-                        errorText: 'A senha deve ter pelo menos 6 caracteres'),
-                  ],
-                ),
+                validator: Validatorless.multiple([
+                  Validatorless.required('A senha é obrigatória'),
+                  Validatorless.min(8, 'A senha deve ter pelo menos 8 caracteres'),
+                ]),
                 decoration: InputDecoration(
                   hintText: 'Senha',
                   border:

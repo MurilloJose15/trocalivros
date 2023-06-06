@@ -22,7 +22,7 @@ Future<void> main() async {
         GetPage(name: '/home', page: () => HomeScreen()),
         GetPage(name: '/register', page: () => RegisterScreen()),
         GetPage(name: '/recoveryPass', page: () => RecoveryPassScreen()),
-        GetPage(name: '/signed', page: () => HomeAppScreen()),
+        GetPage(name: '/signed', page: () => HomeScreenApp()),
         GetPage(name: '/userUpdate', page: () => UserUpdateScreen()),
       ],
       debugShowCheckedModeBanner: false,
