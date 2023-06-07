@@ -2,8 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
+import 'package:trocalivros/model/social_model.dart';
 import 'package:validatorless/validatorless.dart';
+
 
 
 
@@ -19,14 +22,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
 
   bool _isObscure = true;
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
+  final  _controladorEmail = TextEditingController();
+  final  _controladorSenha = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
 
   Future<void> logarUsuarioFirebase() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
+          email: _controladorEmail.text, password: _controladorSenha.text);
 
       Navigator.of(context)
           .pushNamedAndRemoveUntil('/signed', (Route<dynamic> route) => false);
@@ -36,6 +40,46 @@ class _LoginScreenState extends State<LoginScreen> {
       );
       ScaffoldMessenger.of(context).showSnackBar(snackBar);
     }
+    var formValid = _formKey.currentState?.validate() ?? false;
+    if(formValid){
+
+    }
+  }
+
+  Future<SocialNetworkModel> googleLogin() async {
+    final googleSignIn = GoogleSignIn();
+
+    if(await googleSignIn.isSignedIn()) {
+      await googleSignIn.disconnect();
+    }
+
+    final googleUser = await googleSignIn.signIn();
+    final googleAuth = await googleUser?.authentication;
+
+    if(googleAuth!= null && googleUser != null) {
+      return SocialNetworkModel(
+          id: googleAuth.idToken ?? '',
+          name: googleUser.displayName ?? '',
+          email: googleUser.email,
+          type: 'Google',
+          avatar: googleUser.photoUrl,
+          accessToken: googleAuth.accessToken ?? '',
+      );
+    }else {
+      throw AlertDialog(content: Text('Erro ao tentar logar com o Google'));
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controladorEmail.dispose();
+    _controladorSenha.dispose();
+    super.dispose();
   }
 
   @override
@@ -43,37 +87,27 @@ class _LoginScreenState extends State<LoginScreen> {
     return Form(
       key: _formKey,
       child: Column(
-        children: <Widget>[
+        children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 60),
             child: Text(
               'Troca Livros',
-              style: TextStyle(
-                fontSize: 40.0,
-              ),
+              style: TextStyle(fontSize: 40.0,),
             ),
           ),
-          SizedBox(
-            height: 30,
-          ),
+          SizedBox(height: 30,),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: TextFormField(
-                controller: _emailController,
-                validator: Validatorless.multiple([
-                  Validatorless.required('Email is required'),
-                  Validatorless.email('Invalid email'),
-                ]),
-                decoration: InputDecoration(
-                  hintText: 'E-mail',
-                  border:
-                  OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
-                ),
-              ),
+            child: TextFormField(
+              controller: _controladorEmail,
+              decoration: const InputDecoration(
+                  label: Text('E-mail'),
+                  border: OutlineInputBorder(),
+                  prefixIcon: Icon(Icons.email)),
+              validator: Validatorless.multiple([
+                Validatorless.required('Email é Obrigatório!'),
+                Validatorless.email('Email inválido!')
+              ]),
             ),
           ),
           SizedBox(height: 20),
@@ -84,16 +118,14 @@ class _LoginScreenState extends State<LoginScreen> {
                 borderRadius: BorderRadius.circular(5),
               ),
               child: TextFormField(
-                controller: _passwordController,
+                controller: _controladorSenha,
                 obscureText: _isObscure,
-                validator: Validatorless.multiple([
-                  Validatorless.required('A senha é obrigatória'),
-                  Validatorless.min(8, 'A senha deve ter pelo menos 8 caracteres'),
-                ]),
+                validator: Validatorless.required('Senha obrigatória'),
                 decoration: InputDecoration(
                   hintText: 'Senha',
                   border:
                   OutlineInputBorder(borderRadius: BorderRadius.circular(5)),
+                  prefixIcon: Icon(Icons.password),
                   suffixIcon: GestureDetector(
                     child: Icon(Icons.remove_red_eye),
                     onTap: () {
@@ -118,8 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           SizedBox(height: 20),
           ElevatedButton(
-            onPressed: logarUsuarioFirebase, child: Text('Logar'),
-          ),
+            onPressed: logarUsuarioFirebase, child: Text('Logar'),),
           SizedBox(height: 20),
           GestureDetector(
             onTap: () {
@@ -130,9 +161,61 @@ class _LoginScreenState extends State<LoginScreen> {
               style: TextStyle(color: Colors.blue),
             ),
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 15),
+          const _OrSeparator(),
+          SizedBox(height: 15),
+          Column(
+            children: [
+              GestureDetector(
+                onTap: googleLogin,
+                child: Container(
+
+                    height: 40,
+                    child: Image.asset('images/google.png'),
+                ),
+              ),
+              SizedBox(height: 5,),
+              Text('Logar com o Google',
+                  style: TextStyle(color: Colors.blue))
+            ],
+          ),
         ],
       ),
     );
   }
 }
+
+class _OrSeparator extends StatelessWidget {
+  const _OrSeparator({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+            child: Divider(
+          thickness: 1,
+          color: Colors.blue,
+        ),
+        ),
+        Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                'OU',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+              color: Colors.blue
+            ),),
+        ),
+        Expanded(
+          child: Divider(
+            thickness: 1,
+            color: Colors.blue,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
