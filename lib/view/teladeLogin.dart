@@ -27,6 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
 
 
+
   Future<void> logarUsuarioFirebase() async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(
@@ -46,27 +47,52 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
-  Future<SocialNetworkModel> googleLogin() async {
-    final googleSignIn = GoogleSignIn();
+  // Future<SocialNetworkModel> googleLogin() async {
+  //   final googleSignIn = GoogleSignIn();
+  //
+  //   if(await googleSignIn.isSignedIn()) {
+  //     await googleSignIn.disconnect();
+  //   }
+  //
+  //   final googleUser = await googleSignIn.signIn();
+  //   final googleAuth = await googleUser?.authentication;
+  //
+  //   if(googleAuth!= null && googleUser != null) {
+  //     return SocialNetworkModel(
+  //         id: googleAuth.idToken ?? '',
+  //         name: googleUser.displayName ?? '',
+  //         email: googleUser.email,
+  //         type: 'Google',
+  //         avatar: googleUser.photoUrl,
+  //         accessToken: googleAuth.accessToken ?? '',
+  //     );
+  //   }else {
+  //     throw AlertDialog(content: Text('Erro ao tentar logar com o Google'));
+  //   }
+  // }
 
-    if(await googleSignIn.isSignedIn()) {
-      await googleSignIn.disconnect();
-    }
+  Future<void> logarGoogle() async {
+    final GoogleSignIn googleSignIn = await GoogleSignIn();
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+    final GoogleSignInAuthentication? googleAuth = await googleUser
+        ?.authentication;
+    print(googleAuth?.idToken); // should not be null or empty
+    print(googleAuth?.accessToken); // should not be null or empty
 
-    final googleUser = await googleSignIn.signIn();
-    final googleAuth = await googleUser?.authentication;
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
 
-    if(googleAuth!= null && googleUser != null) {
-      return SocialNetworkModel(
-          id: googleAuth.idToken ?? '',
-          name: googleUser.displayName ?? '',
-          email: googleUser.email,
-          type: 'Google',
-          avatar: googleUser.photoUrl,
-          accessToken: googleAuth.accessToken ?? '',
-      );
-    }else {
-      throw AlertDialog(content: Text('Erro ao tentar logar com o Google'));
+    final UserCredential authResult = await FirebaseAuth.instance
+        .signInWithCredential(credential);
+    final User? user = authResult.user;
+
+    //customMaterialBanner(context, 'Logado com sucesso!', Colors.green);
+    if (user != null) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(
+          '/signed', (Route<dynamic> route) => false);
     }
   }
 
@@ -167,7 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Column(
             children: [
               GestureDetector(
-                onTap: googleLogin,
+                onTap: logarGoogle,
                 child: Container(
 
                     height: 40,

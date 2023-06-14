@@ -1,13 +1,13 @@
-import '/view/recoveryPasswordScreen.dart';
-import '/view/registerScreen.dart';
-import '/view/userUpdateProfile.dart';
+import '/view/recuperarSenha.dart';
+import '/view/teladeCadastro.dart';
+import '/view/atualizarPerfil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'firebase_options.dart';
 import 'view/homeScreen.dart';
-import 'view/loginScreen.dart';
+import 'view/teladeLogin.dart';
 import 'view/homeapp.dart';
 
 Future<void> main() async {
