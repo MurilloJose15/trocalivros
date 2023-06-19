@@ -1,10 +1,12 @@
-import '/view/recuperarSenha.dart';
-import '/view/teladeCadastro.dart';
-import '/view/atualizarPerfil.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:trocalivros/view/cadLivro.dart';
 
+import '/view/listatLivros.dart';
+import '/view/recuperarSenha.dart';
+import '/view/teladeCadastro.dart';
+import '/view/atualizarPerfil.dart';
 import 'firebase_options.dart';
 import 'view/homeScreen.dart';
 import 'view/teladeLogin.dart';
@@ -24,6 +26,8 @@ Future<void> main() async {
         GetPage(name: '/recoveryPass', page: () => RecoveryPassScreen()),
         GetPage(name: '/signed', page: () => HomeScreenApp()),
         GetPage(name: '/userUpdate', page: () => UserUpdateScreen()),
+        GetPage(name: '/tLivros', page: () => ListatLivros()),
+        GetPage(name: '/CadLivro', page: () => CadLivro())
       ],
       debugShowCheckedModeBanner: false,
       home: HomeScreen()));

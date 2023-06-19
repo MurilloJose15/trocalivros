@@ -14,7 +14,7 @@ class CustomDrawer extends StatefulWidget {
 }
 
 class _CustomDrawerState extends State<CustomDrawer> {
-  final UserController _userController = Get.put(UserController());
+  final CtrlUsuario _ctrlUsuario = Get.put(CtrlUsuario());
 
   Future<void> deslogarFirebase() async {
     await FirebaseAuth.instance.signOut();
@@ -29,16 +29,16 @@ class _CustomDrawerState extends State<CustomDrawer> {
         padding: EdgeInsets.zero,
         children: <Widget>[
           UserAccountsDrawerHeader(
-            accountName: Text(_userController.user?.displayName ?? ''),
-            accountEmail: Text(_userController.user?.email ?? ''),
+            accountName: Text(_ctrlUsuario.user?.displayName ?? ''),
+            accountEmail: Text(_ctrlUsuario.user?.email ?? ''),
             currentAccountPicture: CircleAvatar(
                 backgroundColor: Colors.white,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      _userController.user?.email?.isNotEmpty == true
-                          ? _userController.user!.email![0]
+                      _ctrlUsuario.user?.email?.isNotEmpty == true
+                          ? _ctrlUsuario.user!.email![0]
                           : 'M',
                       style: TextStyle(fontSize: 40.0),
                     ),
@@ -53,6 +53,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
             },
           ),
           ListTile(
+            leading: Icon(Icons.bookmarks),
+            title: Text('Livros Disponíveis'),
+            onTap: () {
+              Get.toNamed('/tLivros');
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.update),
             title: Text('Atualizar Perfil do Usuário'),
             onTap: () {
@@ -61,38 +68,18 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           ListTile(
             leading: Icon(Icons.book),
-            title: Text('Cadastrar Livro para Ler'),
+            title: Text('Cadastrar Meu Livro Lido'),
             onTap: () {
-              // Atualize o estado do aplicativo
-              // ...
-              // Em seguida, feche o drawer
-              Navigator.pop(context);
+              Get.toNamed('/CadLivro');
             },
           ),
-          ListTile(
-            leading: Icon(Icons.done),
-            title: Text('Cadastrar Livro Lido'),
-            onTap: () {
-              // Atualize o estado do aplicativo
-              // ...
-              // Em seguida, feche o drawer
-              Navigator.pop(context);
-            },
-          ),
+
           ListTile(
             leading: Icon(Icons.list),
-            title: Text('Listar Livros Lidos'),
+            title: Text('Listar Meus Livros Lidos'),
             onTap: () {
-              // Atualize o estado do aplicativo
-              // ...
-              // Em seguida, feche o drawer
-              Navigator.pop(context);
+              Get.toNamed('/listBooks');
             },
-          ),
-          ListTile(
-            leading: Icon(Icons.logout),
-            title: Text('Sair'),
-            onTap: deslogarFirebase,
           ),
         ],
       ),

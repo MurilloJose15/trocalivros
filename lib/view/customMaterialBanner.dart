@@ -7,21 +7,14 @@ void customMaterialBanner(BuildContext context, String title, Color corDeFundo) 
     content: Text(title),
     actions: [
       GestureDetector(
-        onTap: () {
-          Future.delayed(Duration(seconds: 3), () {
-            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
-          });
-        },
-        child: GestureDetector(
           onTap: () {
             ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
           },
           child: Icon(
             Icons.close,
             color: Colors.white,
-          ),
-        ),
-      ),
+          )
+      )
     ],
   );
 

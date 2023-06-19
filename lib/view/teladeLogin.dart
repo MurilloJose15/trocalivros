@@ -4,7 +4,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import 'package:trocalivros/model/social_model.dart';
+import 'package:trocalivros/model/book.dart';
 import 'package:validatorless/validatorless.dart';
 
 

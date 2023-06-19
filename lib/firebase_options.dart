@@ -70,6 +70,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '770152763239',
     projectId: 'devolveolivro',
     storageBucket: 'devolveolivro.appspot.com',
+    androidClientId: '770152763239-55n8hare3pmcd9cdagovohhhj5qqf7so.apps.googleusercontent.com',
     iosClientId: '770152763239-ptk1c9t5nh4mt2dnod4ai9b1idgqa7ep.apps.googleusercontent.com',
     iosBundleId: 'com.example.trocalivros',
   );

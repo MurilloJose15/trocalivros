@@ -36,7 +36,7 @@ class _UserUpdateScreenState extends State<UserUpdateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final userController = Get.find<UserController>();
+    final ctrlUsuario = Get.find<CtrlUsuario>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Atualizar Perfil'),

@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "770152763239-55n8hare3pmcd9cdagovohhhj5qqf7so.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trocalivros",
+            "certificate_hash": "05b19ae5b209d5387dc222d2593f1b87d6990989"
+          }
+        },
+        {
           "client_id": "770152763239-sar1ergnd392jkaudejfhkghj9uhosm2.apps.googleusercontent.com",
           "client_type": 3
         }
