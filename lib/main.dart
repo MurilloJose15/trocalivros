@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:trocalivros/view/cadLivro.dart';
+import 'package:trocalivros/view/cadUsuario.dart';
 
 import '/view/listatLivros.dart';
 import '/view/recuperarSenha.dart';
@@ -27,7 +28,8 @@ Future<void> main() async {
         GetPage(name: '/signed', page: () => HomeScreenApp()),
         GetPage(name: '/userUpdate', page: () => UserUpdateScreen()),
         GetPage(name: '/tLivros', page: () => ListatLivros()),
-        GetPage(name: '/CadLivro', page: () => CadLivro())
+        GetPage(name: '/CadLivro', page: () => CadLivro()),
+        GetPage(name: '/CadUsuario', page: () => CadUsuario()),
       ],
       debugShowCheckedModeBanner: false,
       home: HomeScreen()));

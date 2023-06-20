@@ -1,36 +1,26 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import '../model/usuario.dart';
-import '../modelview/estruturaUsuario.dart';
-import 'ctrldeUsuario.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'customMaterialBanner.dart';
+import 'package:trocalivros/model/book.dart';
+import 'package:trocalivros/model/usuario.dart';
+import 'package:trocalivros/view/ctrldeLivro.dart';
+import 'package:trocalivros/view/ctrldeUsuario.dart';
+
+import '../modelview/estruturaUsuario.dart';
 import 'custom_drawer.dart';
 
 
-class UserUpdateScreen extends StatefulWidget {
+class CadUsuario extends StatefulWidget {
   @override
-  _UserUpdateScreenState createState() => _UserUpdateScreenState();
+  State<CadUsuario> createState() => _CadUsuarioState();
 }
 
-class _UserUpdateScreenState extends State<UserUpdateScreen> {
+class _CadUsuarioState extends State<CadUsuario> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _dataNascimentoController = TextEditingController();
   final TextEditingController _emailUserController = TextEditingController();
   final TextEditingController _enderecoController = TextEditingController();
   final TextEditingController _telefoneController = TextEditingController();
-
-  Future<void> atualizarUsuarioAuthFirebase(
-      context, String email, String displayName) async {
-    final user = await FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      user.updateDisplayName(displayName);
-      user.updateEmail(email);
-      customMaterialBanner(
-          context, 'Dados Atualizados com Sucesso!', Colors.green);
-    }
-  }
 
   final CtrlUsuario _ctrlUsuario = Get.put(CtrlUsuario());
 
@@ -48,10 +38,9 @@ class _UserUpdateScreenState extends State<UserUpdateScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ctrlUsuario = Get.find<CtrlUsuario>();
     return Scaffold(
       appBar: AppBar(
-        title: Text('Atualizar Perfil'),
+        title: Text('Cadastrar Usuario'),
       ),
       drawer: CustomDrawer(),
       body: Form(
@@ -130,9 +119,6 @@ class _UserUpdateScreenState extends State<UserUpdateScreen> {
                   return null;
                 },
               ),
-            ),
-            SizedBox(
-              height: 30,
             ),
             Container(
               width: MediaQuery.of(context).size.width * 0.9,
